@@ -1,0 +1,23 @@
+.historyContainer {
+    width: '200px';
+    height: '100vh';
+    padding: '20px';
+    position: 'fixed';
+    left: 0;
+    top: 0;
+    overflow-y: 'auto';
+
+    .historyItem {
+        border: 1px solid black;
+        height: 30px;
+        text-align: center;
+        font-size: larger;
+        font-weight: 400;
+        color: blue;
+        cursor: pointer;
+    }
+
+    .historyItem:hover {
+        background-color: rgb(224, 221, 221);
+    }
+}
