@@ -57,4 +57,7 @@ The frontend is a React application built with Vite. It uses Redux for managing 
 
 The UI is styled with SCSS, and all API calls are managed via Redux actions.
 
+## Screenshot
+![DuckDuckGoProxy](./client/src/assets/Screenshot.jpg)
+
 
