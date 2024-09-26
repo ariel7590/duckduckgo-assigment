@@ -29,7 +29,7 @@ const SearchBar = () => {
                 className='searchInput'
                 onChange={(e) => setInput(e.target.value)}
                 onClick={()=>dispatch(turnOffHistoryMode())}
-                placeholder="Search QuakQuakGo..."
+                placeholder="Search DuckDuckGo..."
             />
             <button
             className='searchButton'
