@@ -43,8 +43,8 @@ To run the application, type:
 
 ### Backend
 The backend is built with Node.js and Express. It acts as a proxy for DuckDuckGo's search API. There are two main API routes:
-- `GET /api/search?q=<query>`: Fetches search results via a query parameter.
-- `POST /api/search`: Fetches search results via the request body (JSON format).
+- `GET /search?q=<query>`: Fetches search results via a query parameter.
+- `POST /search`: Fetches search results via the request body (JSON format).
 
 All search queries are persisted in a JSON file (`queryHistory.json`).
 
@@ -56,5 +56,8 @@ The frontend is a React application built with Vite. It uses Redux for managing 
 - **Search History**: A list of past queries is shown, allowing users to quickly repeat previous searches.
 
 The UI is styled with SCSS, and all API calls are managed via Redux actions.
+
+## Screenshot
+![DuckDuckGoProxy](./client/src/assets/Screenshot.jpg)
 
 
