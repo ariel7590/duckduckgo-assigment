@@ -45,9 +45,10 @@ const httpGetSearchByBody = async (req, res) => {
      * Getting info from the body through a post request and searching through DDG
      */
     const query = req.body.query;
-    if (!query) {
+    const page = req.body.page;
+    if (!query || !page) {
         return res.status(400).json({
-            error: "Query field is missing!",
+            error: "One the query parameters q or page is missing!",
         });
     }
     try {
@@ -55,12 +56,14 @@ const httpGetSearchByBody = async (req, res) => {
             params: { q: query, format: "json" },
         });
         const results = (0, response_utils_1.mapDuckDuckGoResponse)(response.data.RelatedTopics);
+        const totalPages = Math.ceil(results.length / 10);
+        const paginatedResults = (0, pagination_utils_1.paginate)(results, page);
         const history = (0, history_utils_1.loadQueryHistory)();
         if (!history.includes(query)) {
             history.push(query);
             (0, history_utils_1.saveQueryHistory)(history);
         }
-        res.status(200).json(results);
+        res.status(200).json({ results: paginatedResults, totalPages });
     }
     catch (error) {
         res.status(500).json({

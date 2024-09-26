@@ -39,11 +39,12 @@ export const httpGetSearchByBody:RequestHandler=async (req, res)=>{
     /**
      * Getting info from the body through a post request and searching through DDG
      */
-    const query = req.body.query;
+    const query: string = req.body.query;
+	const page: number = req.body.page;
 
-	if (!query) {
+	if (!query || !page) {
 		return res.status(400).json({
-			error: "Query field is missing!",
+			error: "One the query parameters q or page is missing!",
 		});
 	}
 
@@ -53,6 +54,8 @@ export const httpGetSearchByBody:RequestHandler=async (req, res)=>{
 		});
 
 		const results = mapDuckDuckGoResponse(response.data.RelatedTopics);
+		const totalPages=Math.ceil(results.length/10);
+		const paginatedResults=paginate(results,page);
 
 		const history = loadQueryHistory();
 		if (!history.includes(query)) {
@@ -60,7 +63,7 @@ export const httpGetSearchByBody:RequestHandler=async (req, res)=>{
 			saveQueryHistory(history);
 		}
 
-		res.status(200).json(results);
+		res.status(200).json({results: paginatedResults, totalPages});
 	} catch (error) {
 		res.status(500).json({
 			error: "Can't fetch results from DuckDuckGo",

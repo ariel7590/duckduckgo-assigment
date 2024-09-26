@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../redux/store';
 import { setQuery, addToHistory, turnOffHistoryMode } from '../../redux/search/search.slice';
-import { getSearchResults } from '../../redux/search/search.thunks';
+import { getSearchResultsByGET } from '../../redux/search/search.thunks';
 import SearchIcon from '@mui/icons-material/Search';
 import "./search-bar.styles.scss";
 
@@ -17,7 +17,7 @@ const SearchBar = () => {
         setInput("");
         dispatch(setQuery(input));
         dispatch(addToHistory(input));
-        dispatch(getSearchResults({ query: input, page: currentPage }));
+        dispatch(getSearchResultsByGET({ query: input, page: currentPage }));
     };
 
 

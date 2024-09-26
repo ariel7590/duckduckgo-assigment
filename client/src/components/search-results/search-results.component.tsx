@@ -4,27 +4,13 @@ import { RootState } from "../../redux/store";
 import PageSelector from "../page-selector/page-selector.component";
 import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
-
-const highlightText = (text: string, query: string) => {
-	if (!query) return text;
-	const regex = new RegExp(`(${query})`, "gi"); // case insensitive
-	const parts = text.split(regex);
-
-	return parts.map((part, index) =>
-		part.toLowerCase() === query.toLowerCase() ? (
-			<span key={index} style={{ backgroundColor: "yellow" }}>
-				{part}
-			</span>
-		) : (
-			part
-		)
-	);
-};
+import { highlightText } from "../../utils/highlight-text";
 
 const SearchResults = () => {
 	const { results, error, loading, query } = useSelector(
 		(state: RootState) => state.search
 	);
+	
 
 	if (loading) {
 		return (
@@ -38,10 +24,9 @@ const SearchResults = () => {
 		return <div>Error: {error}</div>;
 	}
 
-	// Count occurrences of the query in the titles
-	const countOccurrences = (title: string) => {
+	const countOccurrences = (query: string) => {
 		const regex = new RegExp(query, "gi"); // case insensitive
-		return (title.match(regex) || []).length;
+		return (query.match(regex) || []).length;
 	};
 
 	const totalOccurrences = results.reduce(

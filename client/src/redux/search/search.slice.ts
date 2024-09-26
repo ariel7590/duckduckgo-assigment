@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SearchState } from "./search.types";
-import { getSearchHistory, getSearchResults } from "./search.thunks";
+import {
+	getSearchHistory,
+	getSearchResultsByGET,
+	getSearchResultsByPOST,
+} from "./search.thunks";
 
 const initialState: SearchState = {
 	query: "",
@@ -29,25 +33,39 @@ const searchSlice = createSlice({
 			state.currentPage = action.payload;
 		},
 		turnOnHistoryMode(state) {
-			state.historyMode = true
+			state.historyMode = true;
 		},
 		turnOffHistoryMode(state) {
-			state.historyMode = false
+			state.historyMode = false;
 		},
-		
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(getSearchResults.pending, (state) => {
+			.addCase(getSearchResultsByGET.pending, (state) => {
 				state.loading = true;
 			})
-			.addCase(getSearchResults.fulfilled, (state, action) => {
+			.addCase(getSearchResultsByGET.fulfilled, (state, action) => {
+				state.loading = false;
+				state.error = null;
+				state.results = (action.payload as SearchState).results;
+				state.totalPages = (action.payload as SearchState).totalPages;
+				state.currentPage = 1;
+			})
+			.addCase(getSearchResultsByGET.rejected, (state, action) => {
+				state.loading = false;
+				state.query = "";
+				state.error = action.payload as string;
+			})
+			.addCase(getSearchResultsByPOST.pending, (state) => {
+				state.loading = true;
+			})
+			.addCase(getSearchResultsByPOST.fulfilled, (state, action) => {
 				state.loading = false;
 				state.error = null;
 				state.results = (action.payload as SearchState).results;
 				state.totalPages = (action.payload as SearchState).totalPages;
 			})
-			.addCase(getSearchResults.rejected, (state, action) => {
+			.addCase(getSearchResultsByPOST.rejected, (state, action) => {
 				state.loading = false;
 				state.query = "";
 				state.error = action.payload as string;
@@ -68,6 +86,12 @@ const searchSlice = createSlice({
 	},
 });
 
-export const { setQuery, addToHistory, setPage, turnOnHistoryMode, turnOffHistoryMode } = searchSlice.actions;
+export const {
+	setQuery,
+	addToHistory,
+	setPage,
+	turnOnHistoryMode,
+	turnOffHistoryMode,
+} = searchSlice.actions;
 
 export default searchSlice.reducer;

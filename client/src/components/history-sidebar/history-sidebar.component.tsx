@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
 import { getSearchHistory } from "../../redux/search/search.thunks";
 import { setQuery, addToHistory, turnOnHistoryMode } from '../../redux/search/search.slice';
-import { getSearchResults } from '../../redux/search/search.thunks';
+import { getSearchResultsByGET } from '../../redux/search/search.thunks';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import "./history-sidebar.styles.scss";
@@ -20,7 +20,7 @@ const HistorySideBar = () => {
     const handleClick = (search:string) => {
         dispatch(setQuery(search));
         dispatch(addToHistory(search));
-        dispatch(getSearchResults({ query: search, page: currentPage }));
+        dispatch(getSearchResultsByGET({ query: search, page: currentPage }));
         dispatch(turnOnHistoryMode());
     };
 

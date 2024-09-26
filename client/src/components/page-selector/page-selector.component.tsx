@@ -3,7 +3,7 @@ import Pagination from "@mui/material/Pagination";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../redux/store';
 import { setPage } from '../../redux/search/search.slice';
-import { getSearchResults } from '../../redux/search/search.thunks';
+import { getSearchResultsByPOST } from '../../redux/search/search.thunks';
 
 
 const PageSelector = () => {
@@ -12,7 +12,7 @@ const PageSelector = () => {
 
     const handlePageChange = (page: number) => {
         dispatch(setPage(page));
-        dispatch(getSearchResults({ query, page }));
+        dispatch(getSearchResultsByPOST({ query, page }));
     };
 
     return (
