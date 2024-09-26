@@ -43,8 +43,8 @@ To run the application, type:
 
 ### Backend
 The backend is built with Node.js and Express. It acts as a proxy for DuckDuckGo's search API. There are two main API routes:
-- `GET /api/search?q=<query>`: Fetches search results via a query parameter.
-- `POST /api/search`: Fetches search results via the request body (JSON format).
+- `GET /search?q=<query>`: Fetches search results via a query parameter.
+- `POST /search`: Fetches search results via the request body (JSON format).
 
 All search queries are persisted in a JSON file (`queryHistory.json`).
 
