@@ -21,10 +21,8 @@ const searchSlice = createSlice({
 	name: "search",
 	initialState,
 	reducers: {
-		setQuery(state, action) {
+		setQueryAndHistory(state, action) {
 			state.query = action.payload;
-		},
-		addToHistory(state, action) {
 			if (!state.history.includes(action.payload)) {
 				state.history.push(action.payload);
 			}
@@ -49,7 +47,7 @@ const searchSlice = createSlice({
 				state.error = null;
 				state.results = (action.payload as SearchState).results;
 				state.totalPages = (action.payload as SearchState).totalPages;
-				state.currentPage = 1;
+				state.currentPage = 1;			
 			})
 			.addCase(getSearchResultsByGET.rejected, (state, action) => {
 				state.loading = false;
@@ -87,8 +85,7 @@ const searchSlice = createSlice({
 });
 
 export const {
-	setQuery,
-	addToHistory,
+	setQueryAndHistory,
 	setPage,
 	turnOnHistoryMode,
 	turnOffHistoryMode,
